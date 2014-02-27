@@ -20,7 +20,7 @@
 
 Compile to HTML
 
-```javascript
+```js
 var jade = require('gulp-jade');
 
 gulp.task('templates', function() {
@@ -36,13 +36,28 @@ gulp.task('templates', function() {
 
 Compile to JS
 
-```javascript
+```js
 var jade = require('gulp-jade');
 
 gulp.task('templates', function() {
   gulp.src('./lib/*.jade')
     .pipe(jade({
       client: true
+    }))
+    .pipe(gulp.dest('./dist/'))
+});
+```
+
+Compile to JS - exports template function
+
+```js
+var jade = require('gulp-jade');
+
+gulp.task('templates', function() {
+  gulp.src('./lib/*.jade')
+    .pipe(jade({
+      client: true,
+      exports: true
     }))
     .pipe(gulp.dest('./dist/'))
 });
@@ -58,7 +73,7 @@ In addition, you can pass in a `locals` or `data` option that will be used as lo
 
 If you are trying to wrap your Jade template functions in an AMD wrapper, use [`gulp-wrap-amd`](https://github.com/phated/gulp-wrap-amd)
 
-```javascript
+```js
 var jade = require('gulp-jade');
 var wrap = require('gulp-wrap-amd');
 
