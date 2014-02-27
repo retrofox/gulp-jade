@@ -48,7 +48,7 @@ gulp.task('templates', function() {
 });
 ```
 
-Compile to JS - exports template function
+Compile to JS - **Exports** template function
 
 ```js
 var jade = require('gulp-jade');
