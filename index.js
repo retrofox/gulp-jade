@@ -8,7 +8,16 @@ var PluginError = require('gulp-util').PluginError;
 
 function handleCompile(contents, opts){
   if(opts.client){
-    return compileClient(contents, opts);
+    var compiled = compileClient(contents, opts);
+    if (opts.exports) {
+      var comment = '\n\n/**\n';
+      comment +=    ' * Export module\n';
+      comment +=    ' */\n';
+
+      compiled += comment;
+      compiled += "\nmodule.exports = template;";
+    }
+    return compiled;
   }
 
   return compile(contents, opts)(opts.locals || opts.data);
@@ -21,6 +30,13 @@ function handleExtension(filepath, opts){
 
   return ext(filepath, '.html');
 }
+
+/**
+ * Expose module
+ *
+ * @param {Object} options
+ * @api public
+ */
 
 module.exports = function(options){
   var opts = options || {};
