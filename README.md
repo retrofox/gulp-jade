@@ -59,6 +59,19 @@ gulp.task('templates', function() {
       client: true,
       exports: true
     }))
+
+Define the jade module name
+
+```js
+var jade = require('gulp-jade');
+
+gulp.task('templates', function() {
+  gulp.src('./lib/*.jade')
+    .pipe(jade({
+      client: true,
+      exports: true,
+      modulename: 'runtime-jade'
+    }))
     .pipe(gulp.dest('./dist/'))
 });
 ```
