@@ -1,20 +1,34 @@
 'use strict';
 
+/**
+ * Module dependencies
+ */
+
 var through = require('through2');
-var compile = require('jade').compile;
-var compileClient = require('jade').compileClient;
-var ext = require('gulp-util').replaceExtension;
-var PluginError = require('gulp-util').PluginError;
+var gutil = require('gulp-util');
+var jade = require('jade');
+
+/**
+ * Sub modules
+ */
+
+var compile = jade.compile;
+var compileClient = jade.compileClient;
+var ext = gutil.replaceExtension;
+var PluginError = gutil.PluginError;
 
 function handleCompile(contents, opts){
-  if(opts.client){
+  if (opts.client){
     var compiled = compileClient(contents, opts);
     if (opts.exports) {
+      opts.modulename = opts.modulename || 'jade';
+      var req_jade = "var jade = require('" + opts.modulename + "');\n";
+
       var comment = '\n\n/**\n';
       comment +=    ' * Export module\n';
       comment +=    ' */\n';
 
-      compiled += comment;
+      compiled = req_jade + compiled + comment;
       compiled += "\nmodule.exports = template;";
     }
     return compiled;
